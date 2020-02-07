@@ -1,0 +1,771 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[english]{babel}
+\usepackage{pgfplots}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+\UseRawInputEncoding
+\def\npart {II}
+\def\nterm {Lent}
+\def\nyear {2020}
+\def\nlecturer { B. Groisman}
+\def\ncourse {Further Complex Methods}
+\def\nofficial {}
+
+\input{header}
+\begin{document}
+\maketitle
+{\small
+\noindent\textbf{Complex variable}\\
+Revision of complex variable. Analyticity of a function defined by an integral (statement and discussion
+only). Analytic and meromorphic continuation.
+Cauchy principal value of finite and infinite range improper integrals. The Hilbert transform. KramersKronig relations.
+Multivalued functions: definitions, branch points and cuts, integration; examples, including inverse
+trigonometric functions as integrals and elliptic integrals. 
+\hspace*{\fill} [8]
+\vspace{10pt}\\
+\noindent\textbf{Special functions}\\
+Gamma function: Euler integral definition; brief discussion of product formulae; Hankel representation;
+reflection formula; discussion of uniqueness (e.g. Wielandt’s theorem). Beta function: Euler integral
+definition; relation to the gamma function. Riemann zeta function: definition as a sum; integral
+representations; functional equation; *discussion of zeros and relation to p(x) and the distribution of
+prime numbers*.    
+ \hspace*{\fill} [6]
+ \vspace{10pt}\\
+ \noindent\textbf{Differential equations by transform methods}\\
+Solution of differential equations by integral representation; Airy equation as an example. Solution
+of partial differential equations by transforms; the wave equation as an example. Causality. Nyquist
+stability criterion.    \hspace*{\fill} [4]
+  \vspace{10pt}\\
+  \noindent\textbf{Second order ordinary differential equations in the complex plane}\\
+Classification of singularities, exponents at a regular singular point. Nature of the solution near an
+isolated singularity by analytic continuation. Fuchsian differential equations. The Riemann P-function,
+hypergeometric functions and the hypergeometric equation, including brief discussion of monodromy.
+\hspace*{\fill} [6]
+}
+\tableofcontents
+\setcounter{section}{-1}
+\section{Introduction}
+Whilst the prerequisites for this course include complex analysis, this is primarily a methods course - expanding on IB complex methods. 
+\begin{enumerate}
+    \item Complex variable
+        \begin{itemize}
+            \item Revision
+            \item Analyticity and functions defined by integrals e.g. $\Gamma (z) = \int_0^{\infty} t^{ z - 1} e^{ - t}\text{d}t$ domain of $z$? Analytic continuation?
+        \item Departure from analyticity (singularities at a point or at a curve) : Principal Value e.g. $PV \int_{-1}^{2} \frac{1}{x} \text{d}x \overset{?}{=} \log 2$
+        \end{itemize}
+    \item Special functions
+        $\Gamma, \beta , \zeta$
+    \item Integral transforms of ODE and PDE
+    \item Second order ODE on $\C$ (1,2,3 regular singular points), hypergeometric equations
+\end{enumerate}
+\section{Complex variable}
+\subsection{Brief revision}
+$z = x + iy$
+\begin{defi}[Neighbourhood]
+    A \emph{neighbourhood} of a point $z \in  \C$ is an \emph{open-set} containing $z$.
+\end{defi}
+\begin{defi}[Extendend complex plane]
+    The \emph{extended complex plane} $\C^{\ast}$ or $\overline{\C} = \C \cup \{ \infty\} $. All directions "$\infty$" are equivalent (think of Riemann sphere).
+\end{defi}
+\begin{defi}[Differentiable]
+    A function $f(z)$ is differentiable at $z$ if
+    \[
+        f'(z) = \lim_{ \Delta z \to 0} \left| \frac{f(z + \Delta z) - f(z)}{\Delta z} \right| 
+    \]
+    exists (independent of how $\Delta z \to 0$.
+\end{defi}
+\begin{defi}[Analytic]
+    We say that $f(z)$ is \emph{analytic} (holomorphic / regular) at a point $z$ if $\ \exists \  $ a neighbourhood of $z$ throughout which $f '$ exists. [Extensions to domain D]
+\end{defi}
+\underline{Cauchy-Riemann Conditions}
+If $f(z) =  u(z) + i v(z)$, with $u, v \in  \R$ is differentiable at $z $, then
+\[
+\frac{\partial u}{\partial x}  = \frac{\partial v}{\partial y}  \quad \frac{\partial v}{\partial x}  = - \frac{\partial u}{\partial y} 
+.\] 
+The converse is true for $u, v$ differentiable at $z$.
+\begin{cor}
+    The Wirtinger derivative 
+    \[
+    \overline{\partial} = \frac{\partial f}{\partial \overline{z}}  = 0
+    ,\]
+    where $\frac{\partial }{\partial \overline{z}} = \frac{1}{2} (\frac{\partial }{\partial x}  + i \frac{\partial }{\partial y} )$
+    
+\end{cor}
+\begin{thm}[Cauchy's Theorem]
+    If $f(z)$ is analytic within and on a closed bounded contour $C$, then
+    \[
+        \oint_C f(z) \text{d}z = 0
+    .\]
+    Note that $C$ bounds  D - a simply connected domain and for $z_0$ inside $C$, we have Cauchy's Integral Formula
+    \[
+        f(z_0) = \frac{1}{2 \pi i} \oint_C \frac{f(z)}{ z - z_0} \text{d}z
+    .\] 
+    With $C$ traversed anti-clockwise.
+\end{thm}
+\begin{cor}
+    \[
+        f^{(n)}(z_0) = \frac{n!}{z_0} \oint_C \frac{f(z)}{ ( z - z_0)^{n + 1}} \text{d}z
+    ,\]
+    and functions are differentiable infinitely many times.
+\end{cor}
+\begin{defi}[Entire]
+    A function $f(z)$ is \emph{entire} if it is analytic on $\C$ (not $\overline{\C}$).
+\end{defi}
+This leads us to.
+\begin{thm}[Louiville's Theorem]
+    If $f$ is entire and bounded on $\overline{\C}$, then  $f$ is constant.
+\end{thm}
+\begin{proof}
+    Consider a circular disc or radius $R$ centred at $z_0$ and we know $|f(z)| < M$. Then from our previous corollary, 
+     \[
+         |f^{(n)}(z_0)| \le \frac{n!}{ 2 \pi i} \oint \frac{| f(z)| }{ | z - z_0|^{n + 1}} |\text{d}z| \le \frac{n! M}{2 \pi R^{n + 1}} \oint |\text{d}z| \le \frac{n! M}{R^{n}}
+    .\] 
+    In particular, for $n = 1$ 
+     \[
+         |f'(z)| \le \frac{M}{R} \ \forall \  z \in  \C
+    .\] 
+    We can choose $R$ as large as we wish, so $|f'(z)| \underset{ R \to \infty}{\to} 0$. Hence, $f' (z) = 0 \ \forall \  z$. Since $f(z) - f(0) = \int_{0}^{z} f' (\tilde{z}) \text{d}\tilde{z} = 0$, we obtain $f(z) = f(0).$
+\end{proof}
+\underline{Series Expansions}
+\begin{thm}[Existence of Taylor Expansions]
+    An analytic function has a convergent expansion about any point within its domain of analyticity (proof omitted).
+\end{thm}
+\underline{Laurent Series}
+Suppose $f(z) $ has an isolated singularity at $z_0 $ (but analytic in neighbourhood of $z_0$ ). Then 
+\[
+    f(z) = \sum_{n = - \infty}^{\infty} C_n (z - z_0)^{n}, \quad C_n = \frac{1}{2 \pi i} \oint \frac{f(z)}{ (z - z_0)^{n + 1}} \text{d}z
+.\] 
+We can classify the singularity as follows: 
+\[
+    f(z) = \sum_{n = 0}^{\infty} C_n ( z - z_0)^{n} + \sum^{N}_{n = 1} \frac{C_{-n}}{ (z - z_0)^{n}}
+.\] 
+$z_0$ is:
+\begin{itemize}
+    \item A regular point (or zero) if all $C_{-n } = 0$
+    \item A simple pole if $N = 1$ 
+    \item A pole of order $N$ if $N > 1$
+    \item An essential singularity if  $N \to \infty$
+\end{itemize}
+In the case that $0 < N < \infty$ we can write
+\[
+    f(z) = \frac{1}{(z - z_0)^{N}} \sum_{ k = 0 }^{\infty} C_k (z - z_0)^{k}, \quad f(z) = \frac{g(z)}{(z - z_0)^{N}} 
+\]
+where $g$ is analytic. 
+ \begin{defi}[Residue]
+     The coefficient  $C_{-1}$ is called the \emph{residue} of $f$ at $z_0$, we write $\text{res}(f, z_0) = C_{-1}$
+\end{defi}
+For a simple pole note that $C_{-1} = \lim_{ z \to z_0} (z - z_0) f(z)$. For a pole of order $N$, 
+\[
+    C_{-1} = \frac{1}{(N - 1)!} \frac{ \text {d} ^{N - 1}}{\text{d}z^{N - 1}} ( (z - z_0)^{N}f(z))
+.\] 
+\begin{thm}[Residue Theorem]
+    If $f$ is analytic in a simply connected domain except at a finite number of isolated singularities $z_1, \ldots, z_0$ then
+    \[
+        \oint_C f(z) \text{d}z = 2 \pi i \sum_{k =1}^{n} \text{res} (f(z) ; z_k)
+    .\] 
+Where $C$ is a contour traversed in the anticlockwise direction.
+\end{thm}
+\begin{lemma}
+    (Indentation Lemma) \verb |https://tartarus.org/gareth/maths/Complex_Methods/rjs/indentation.pdf|  \\
+    Let $f $ have a simple pole at $z_0$, $\text{res}(f; z_0)$. Then, 
+    \[
+        \lim \int_{C_{\varepsilon}} f(z) \text{d}z = i (\beta - \alpha) \text{res}(f; z_0), \quad 0 < \alpha < \beta< 2\pi 
+    .\] 
+    Where on $C_{\varepsilon}$ $z  = z_0 + \varepsilon e^{ i \theta}, \alpha \le \theta \le \beta$
+\end{lemma}
+\begin{proof}
+Consider Laurent expansions of $f$ about $z_0$
+\[
+    f(z) = \frac{\text{res}(f, z_0)}{ z - z_0} + g(z)
+,\]
+where $g(z)$ is analytic in the region $| z - z_0| < r$, where $r > 0 $. By continuity of $g$ at $z_0$ we can choose $r$ small enough so $g $ is bounded by some $M$. On $0 < \varepsilon < r$, we have 
+\begin{align*}
+    \int_{ C_{\varepsilon}} f(z)\text{d}z  &= \text{res}(f, z_0) \int_{C_{\varepsilon}} \frac{d\text{dz}}{ z - z_0} + \int_{C_{\varepsilon}} g(z) \text{d}z \\
+    &= i \text{res} (f, z_0) + \int_{C_{\varepsilon}} g(z) \text d z 
+    &= i ( \beta - \alpha) \text{res} (f, z_0) \\
+.\end{align*}
+
+Since 
+\[
+    \left| \int_{C_{\varepsilon}} g(z) \text{d}z \right|  \le M \times  \text{length of } C_{\varepsilon}  = M (\beta - \alpha) \varepsilon \to 0
+.\] 
+\end{proof}
+\subsection{Functions defined by integrals}
+Consider 
+\[
+    F(z) = \int_{C} f(z, t) \text{d}t
+,\]
+where $C$ is some path in $\C$ (not necessarily closed contour). For which values of $z$ is $F(z)$ defined and analytic? Conditions on analyticity: We need to check that 
+\begin{enumerate}
+    \item The integrand is continuous (jointly in $t $ and $z$ )
+    \item The $\int$ converges uniformly in each subset of its domain
+    \item The integrand is analytic in $z$ for each value of $t$
+\end{enumerate}
+Note: there will be no rigorous treatment of (ii).
+\begin{eg}
+    $F(z) = \int_{- \infty}^{\infty} e^{ - z t^2} \text{d}t ( = \left( \frac{\pi}{z} \right)^{\frac{1}{2}}$.
+    \begin{itemize}
+        \item  Existence: Converges for $\text{Re} z > 0$ and diverges for $\text{Re} z < 0$. If $\text{Re} z = 0$ but $z\ne 0$ (i.e. $z$ is imaginary) then the integrand $e^{ - i yt^2} $ oscillates increasingly rapidly. $F(z)$ is not absolutely convergent but conditionally convergent.
+            \[
+                \lim_{\ell \to \infty} \int_{- \ell}^{\ell} | e^{ - i y t^2} |\text{d} t \to \infty \text{ but } \lim_{ \ell \to \infty} \int_{- \ell}^{\ell} | e^{ - i y t^2} | < \infty
+            .\] 
+        \item Analyticity: Clearly (i), (iii) hold. It can be shown that (ii) also holds 
+        \end{itemize}
+\end{eg}
+\begin{eg}
+    Let $F(z) = \int_0^{\infty} \frac{u^{ z - 1}}{u + 1} \text{d}u$ 
+    \begin{itemize}
+        \item Existence: Potential "problems" when $u = 0 , \infty$. The integrand is well-behaved otherwise (except at $u = -1$, but it is outside the range of integration). No problematic values of $z$ (consider $u^{ z - 1} = e^{ (z - 1) \log u}$ ). At $u = 0$, $u + 1 \approx 1$ and so we have  $\int_0 \frac{u^{z -1}}{1} = \frac{u^{z}}{z} \Bigr|_0$. For $z = x +  i y$,
+            \[
+                |u^{z} | = |e^{ z \log u}| = e^{x \log u}   
+            .\] 
+Since $\log u \underset{u \to 0}{\to} -\infty$ we must have $\text{Re }z > 0$. At $u \to \infty$, $u +1 \approx u$ and $\int ^{\infty} \frac{u^{z -1}}{u} = \frac{u^{ z -1}}{z - 1}\Bigr|^{ \infty}$. 
+            \[
+    |u^{ z -1}| = | e^{ (z - 1) \log u}| = e^{ (x - 1) \log u}    
+.\] 
+So need $\text{Re } z < 1$. Clearly for $\text{Re } z > 1, \text{Re } z < 0$, $F(z) $ doesn't converge. What about $z - 1$, $z$ are imaginary. (No convergence). Thus $F(z)$ is defined for $0 < \text{Re } z < 1$
+        \item Analyticity: (i), (iii) are clearly satisfied again leaving out (ii). So $F(z)$ is analytic for $0 < \text{Re }z < 1$.
+        \item Evaluating the integral: Consider $ $
+            \[
+            J = \int_C \frac{t ^{z - 1}}{ t + 1}\text{d}t  = \int_{C_+} + \int_{C_R} + \int_{C_-} \int C_{\epsilon}           
+        ,\]
+        where $R \to \infty, \epsilon \to 0$ and a simple pole at $t = - 1 - e^{ i \pi}$
+            \begin{center}
+    \begin{tikzpicture}
+      \draw [->] (-3, 0) -- (3, 0);
+      \draw [->] (0, -3) -- (0, 3);
+      \draw [thick,decorate, decoration=zigzag] (0, 0) -- (3, 0);
+
+      \draw [mred, thick, ->-=0.1, ->-=0.45, ->-=0.75, ->-=0.84, ->-=0.95] (1.977, 0.3) arc(8.63:351.37:2) node [pos=0.15, anchor = south west] {$C_R$} -- (0.4, -0.3) arc(323.13:36.87:0.5) node [pos=0.7, left] {$C_\varepsilon$} -- cycle;
+
+      \node [circ] at (0, 0) {};
+
+      \node at (-1, 0) {$\times$};
+      \node [above] at (-1, -1) {$-1$};
+    \end{tikzpicture}
+  \end{center}
+  On $C_+ : t  = u , \epsilon \le u \le R$ and $\int_{C_+} = F(z)$. \\
+  On $C_- : t = u e^{ 2 \pi i} , R \ge u \ge \epsilon$ and
+  \[
+      \int_{C_-} = - (e^{ 2 pi i})^{  z - 1} \int_0^{\infty} \frac{u^{ z - 1}}{ 1 + u} \text{d} u = - (e^{2 \pi i})^{ z - 1} F(z)
+  .\] 
+  On $C_R, t = R e^{ i \theta}, 0 \le \theta \le 2 \pi $ and
+    \begin{align*}
+      \int_{C_R}  &= \int_0^{ 2 \pi} \frac{ R^{ z - 1} e^{ i \theta (z - 1)}}{ R e^{ i \theta} + 1} i R e^{ i \theta} \text{d} \theta \\
+      &=  i \int_0^{ 2 \pi} \frac{R^{ z } e^{ i \theta z}}{ R e^{ i \theta} + 1} \text{d} \theta\\
+      &\underset{R \to \infty}{\to} i \int_0^{ 2 \pi} \frac{e^{ i \theta (z-1)}}{R^{ 1 - z}} \text{d} \theta \\
+      & \underset{R \to \infty}{\to} 0
+  .\end{align*}
+  when $\text{Re } z < 1$ 
+  On $C_{\epsilon} : t = \epsilon e^{ i \theta}, 2\pi \ge \theta \ge 0$ and
+  \[
+      \int_{C_{\epsilon} } \underset{ \epsilon \ll 1 }{\to} i \int_{2 \pi}^{ 0} \epsilon^{z} e^{ i \theta z} \text{d}z \underset{\epsilon \to 0}{\to} 0
+  ,\]
+  when $\text{Re } z > 0$. So again we obtain $0 < \text{Re } z < 1$. Thus
+  \[
+      J = F(z) [ 1 - (e^{ 2 \pi i})^{ z - 1}] = 2\pi \text{Res }\left( \frac{t ^{ z - 1}}{t + 1} ; e^{ i \pi} \right)  = 2\pi i (e^{ i \pi})^{ z - 1} 
+  .\] 
+  Hence
+  \[
+      F(z) = \frac{2 \pi i}{ e^{i \pi z} - e^{ i \pi z}} = \frac{ \pi}{ \sin \pi z}
+  .\] 
+  (Later $\Gamma (z) \Gamma( 1 - z) = \pi \cosec \pi z$).
+    \end{itemize}
+\end{eg}
+\subsection{Analytic Continuation}
+    Let $F(z)= \int_{-\infty}^{\infty} e^{ - z t^2} \text{d}t$ is analytic for $\text{Re } z > 0$. Is it possible to extend its domain of analyticity? Would such an extension be unique?
+\begin{thm}[Identity Theorem]
+    Let $g_1, g_2$ be analytic (holomorphic) in a connected open set $D \subseteq \C$ with $g_1 = g_2$ in a non-empty open subset $\tilde{D} \subseteq D$. Then $g_1 = g_2$ on $D$.
+\end{thm}
+\begin{proof}
+Expand $g_1 - g_2$ as a Taylor series about $z_0 \in \tilde{D}$. The series is 0 and convergent in $D$. Thus  $g_1 - g_2 = 0$ on $D$.
+\end{proof}
+\underline{Analytic Continuation} \\
+Let $D_1, D_2$ be open sets with $D_1 \cap D_2 \ne \emptyset$. Let $f_1$ and $f_2$ be analytic on $D_1$ and $D_2$ respectively with $f_1 = f_2$ on $D_1 \cap D_2$. Then we say that $f_2$ is the AC of $f_1$ from $D_1$ to $D_2$. We claim that $f_2 $ is unique.
+\begin{proof}
+    Suppose $\ \exists \  \tilde{f}_2 \ne f_2$, which provides an AC (and $\tilde{f}_2 = f_1$ on $D_1 \cap D_2$). Then we can define the following function
+    \[
+    g_1 = \begin{cases}
+        f_1 & \text{ on } D_1 \\
+        f_2 & \text{ on } D_2
+    \end{cases}
+     \quad g_2= \begin{cases}
+         f_1 & \text{ on }D_1 \\
+         \tilde{f}_2 & \text{on }D_2
+     \end{cases}
+    .\] 
+    Then, by the Identity Theorem, $g_1= g_2$ on $D_1 \cup D_2$. Hence $f_2 = \tilde{f}_2$ so the extension is unique.
+\end{proof}
+With three domains, in the case that we only have overlaps between consecutive domains we cannot use the Identity Theorem on $D_1$ and $D_3$. However, $AC$ of $f_1$ to $D_3$ is unique if AC is possible for all domains connecting $D_1$ and $D_3$ (Monodromy Theorem). The proof is left as an exercise.
+\underline{Methods of AC}
+\begin{enumerate}
+    \item By Taylor expansion: Choose $z_0$ on the boundary of $D$ and extend  $f_1$ to a disk $| z - z_0| < r$, $r$- radius of convergence. 
+        \begin{eg}
+            How to obtain $f(z) = \frac{1}{1 - z}$ by AC. We first note that
+            \[
+                \frac{1}{1 -z} = \frac{1}{1 - z_0} \cdot \frac{1}{ 1 - \frac{z - z_0}{ 1 - z_0}} = \frac{1}{1 - z} \sum_{n = 0}^{\infty} \left( \frac{z - z_0}{ 1 - z_0} \right)^{n} 
+            ,\] 
+            which is convergent if $|z - z_0| < |1 - z_0| = r$. Now, let $f_1  = \sum_{n =0}^{\infty}z^{n}$. It is analytic, for $|z| < 1 = D_1$. Let $f_2 = \sum_{n = 0}^{\infty} \frac{( z - \frac{i}{2})^{n}}{ (z - \frac{i}{2})^{n + 1}}$ which is analytic within the disk $|z - \frac{i}{2}| < \frac{\sqrt{5} }{2} = D_2$. So $f_{1} = f_2$ on $D_1 \cap D_2$. Hence, by the Identity Theorem $f_2$ is the AC of  $f_1$ into $D_2$. This can be continued as a chain of discs to cover the entire $\C \setminus \{ 1\} $ to obtain $\frac{1}{1 - z}$, which has a simple pole at $z = 1$. A Meromorphic continuation - AC excluding singularities. 
+        \end{eg}
+        Such extensions are not always possible
+        \begin{eg}
+            $f(z) = \sum_{n =0}^{\infty} z^{ 2 ^{n}}$, convergent in $|z| < 1$ (by ratio test). The singularities are dense (not isolated) and AC beyond $|z| < 1$ is impossible (see handout). The circle $|z|  = 1$ is called a natural barrier for $f(z)$.
+        \end{eg}
+    \item By contour deformation 
+        \begin{eg}
+            Let $F(z) = \int_{- \infty}^\infty \frac{e^{ i z}}{ t  - z} \text{d}t$ for $\text{Im } z > 0$. We want to continue $F(z)$ to the lower half plane. Obviously, $F(z)$ is not analytic for $\text{Im } z = 0 $. Why can't we just redefine $F$ for $\text{Im } z \ne 0$? Continue $F$ into a neighbourhood of $z_1$ with $\text{Im } z_1 < 0$. Define
+            \[
+                F(z) = \int_\gamma \frac{e^{ i t}}{ t - z}\text{d}t
+            .\] 
+            With $\gamma$ as shown. $F_1$ is defined and analytic $\ \forall \  z $  above $z_1$. If $\text{Im } z > 0$, then $F_1(z) = F(z)$. Indeed, the integrals agree by contour deformation as we can deform $\gamma$ to the real axis without crossing any singularities. Hence $F_1$ is the AC of  $F$ into $\text{Im } z < 0$ (above $\gamma$). Now, let 
+            \[
+                G(z) = \int_{-\infty}^{\infty} \frac{e^{i t}}{ t - z} \text{d}t,  \text{Im } z \ne 0
+            .\] 
+            If $\text{Im } z > 0$ then $G(z) = F(z) $ by definition. If $\text{Im } z < 0$, then (considering a closed contour $C$ ) we get 
+            \[
+                F_1(z) + \int_{\infty}^{-\infty} \frac{e^{ i t }}{ t - z}\text{d}t = 2 \pi i e^{ i z}
+            .\] 
+            So, for $\text{Im } z > 0$, we get $F = F_1 = G(z)$, $\text{Im } z < 0, F_1 = G(z) + 2 \pi i e^{ i z}$. Hence $G(z)$ jumps by $2  \pi i e^{ i z}$ as $z$ crosses the real axis. Thus $G$ cannot provide an analytic continuation of $F$.
+        \end{eg}
+\end{enumerate}
+\subsection{Cauchy Principal Value}
+Motivation: can we say that
+\[
+\int_{-1}^{2} \frac{\text{d}x }{2} = \log 2 - \log |-1|  = \log 2 \text{?}
+.\] 
+\begin{defi}[Cauchy principle value]
+    If $f(x)$ is "badly" behaved at  $x = c$ and $a < c < b$, we define the \emph{Cauchy principal value} (CPV) integral by
+    \[
+        \mathcal{P} \int_{a}^{b} f(x) \text{d}x := \lim_{\varepsilon \to 0} \left(\int_{a}^{ c - \varepsilon} f(x) \text{d}x + \int_{c + \varepsilon}^{b} f(x) \text{d}x \right)
+    ,\]
+    if the limit exists. For the CPV at $\infty$ we define
+    \[
+        \mathcal{P} \int_{-\infty}^{\infty} f(x) \text{d}x = \lim_{ R \to \infty} \int_{-R}^{R} f(x) \text{d}x 
+    ,\]
+    if the limit exists.
+    \end{defi}
+\begin{eg}
+        Define $I = \mathcal{P} \int_{-\infty}^{\infty} \frac{f(x)}{x} \text{d}x$, where $f(z)$ is analytic in the upper half-plane (including the real axis) and $|f(z)| \to 0$ as $|z| \to \infty $. This integral only makes sense as a CPV  
+\begin{center}
+  \begin{tikzpicture}
+    \draw [->] (-3, 0) -- (3, 0);
+    \draw [->] (0, -1) -- (0, 3);
+    \node [] at (0, 0) {$\times$};
+
+    \draw [mred, thick, ->-=0.1, ->-=0.4, ->-=0.7] (-2, 0) node [below] {$-R$} -- (-0.4, 0) node [below] {$\varepsilon$} arc(180:0:0.4) node[pos = 0.3, above] {$C_\varepsilon$} node [below] {$\varepsilon$} -- (2, 0) node[pos = 0.5, above] {$C_1$} node [below] {$R$} arc(0:180:2) node[pos = 0.7, above =  0.2cm] {$C_R$};
+
+  \end{tikzpicture}
+\end{center}
+$\oint_C \frac{f(z)}{z}\text{d}z = \int_{C_1} + \int_{C_\varepsilon} + \int_{C_R} = 0$ as $f(x) $ is analytic inside. 
+It should be clear that
+\[
+    \int_{C_1} \to I  \quad  \int_{C_{\varepsilon}} \to - i \pi f(0)  \quad  \int_{C_R} \to 0
+.\] 
+With the residue for $C_{\varepsilon}$ coming from the indentation lemma since $z = 0$ is a simple pole unless $f(0) = 0$. So,  $I = i \pi f(0)$. Alternatively,
+$\oint_{C_1} = I i\pi f(0) = 2 \pi i f(0)$, so $I = i \pi f(0)$.
+\begin{center}
+  \begin{tikzpicture}
+    \draw [->] (-3, 0) -- (3, 0);
+    \draw [->] (0, -1) -- (0, 3);
+    \node [] at (0, 0) {$\times$};
+
+    \draw [mred, thick, ->-=0.1, ->-=0.4, ->-=0.7] (-2, 0) -- (-0.4, 0)  arc(180:360:0.4)  -- (2, 0) arc(0:180:2);
+  \end{tikzpicture}
+\end{center}
+
+    \end{eg}
+\begin{remark}
+    $I$ depends on the values of $f(x)$ for real $x$. Hence, $f(x)$ cannot be real-valued.
+\end{remark}
+\begin{eg}
+Here we merely use CPV as a tool. Let $I = \int_{-\infty}^{\infty} \frac{1 - \cos x}{x^2}\text{d}x $. The integrand has a removable singularity at $x = 0$. The standard method is to split up the integrand 
+\[
+    I = \int_{-\infty}^{\infty} \left( \frac{1}{x^2} - \frac{e^{ i x}}{2x^2} - \frac{e^{ - ix}}{2x^2} \right)  \text{d}x
+.\] 
+Of which the exponential terms do not converge at $x =0$. So we deform the contour to exclude $0$. For the second integral, we close $C$ in the upper half plane giving zero (since there are no singularities within the closed contour). For the third integral, we close $C$ in the lower half plane giving $- 2 \pi  i ( - i / 2)$ (the minus because we are circling the pole or order two in the clockwise sense). For the first integral, we can close either in the upper half or the lower half plane, giving $0$ (since in the first case the contour encloses no singularities and in the second case the residue of the enclosed singularity is 0). Therefore, I = $\pi$. We can instead use CPV, by continuity of the integral 
+\[
+I = \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x^2}\text{d}x = \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x}\text{d}x = \text{Re } \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - e^{ix}}{ x^2}\text{d}x
+.\] 
+Consider $J = \int_C \frac{1 - e^{ i z}}{z^2} \text{d}z$. 
+\begin{center}
+  \begin{tikzpicture}
+    \draw [->] (-3, 0) -- (3, 0);
+    \draw [->] (0, -1) -- (0, 3);
+    \node [] at (0, 0) {$\times$};
+
+    \draw [mred, thick, ->-=0.1, ->-=0.4, ->-=0.7] (-2, 0) -- (-0.4, 0)  arc(180:0:0.4)  -- (2, 0) arc(0:180:2);
+  \end{tikzpicture}
+\end{center}
+Then
+\[
+    J = \mathcal{P} \int_{-\infty}^{\infty} \frac{ 1 - e^{ i z}}{z^2} \text{d}z = - i \pi ( - i) 
+.\] 
+Where we calculate the residue either by the indentation lemma or directly using L'Hopital's rule. Thus $\int_{-\infty}^{\infty} \frac{1  - e^{ix}}{x^2}\text{d}x = \pi$ and we obtain two results
+\[
+I = \pi, \mathcal{P}\int_{-\infty}^{\infty} \frac{- \sin x}{x^2}\text{d}x = 0
+.\] 
+\end{eg}
+\begin{defi}[Hilbert transform]
+    The \emph{Hilbert transform} of $f(x)$ is defined as 
+    \[
+        \mathcal{H}(f)(y):= \frac{1}{\pi} \mathcal{P} \int_{-\infty}^{\infty} \frac{f(x) \text{d}x}{ x - y}
+    ,\]
+    and it is a function of $y$.
+\end{defi}
+Observe that $\mathcal{H}$ is a linear operator, which takes $f(x)$ into a function of $y$. Assume $x,y \in  \R$. \\
+Assumption: Let's assume that $f$ has a Fourier decomposition, so only need to consider HT of $e^{ i \omega x} $ and use linearity. Let's show that 
+\[
+    \mathcal{H} (e^{ i \omega x})(y) = \begin{cases}
+        i e^{ i \omega x} , & w > 0 \\
+        - i e^{ i \omega x}, & w < 0
+    \end{cases}
+    = \text{sgn}(\omega) i e^{ i \omega x} \quad (\omega \ne 0)
+.\]
+\subsection{Multi-valued Functions}
+
+For a Harmonic function, we must have
+\[
+\frac{\partial^2 u}{\partial x^2}  + \frac{\partial ^2u}{\partial y^2} = 4 \frac{\partial ^2 u }{\partial \overline{z} \partial z}  = 0 
+.\] 
+\begin{eg}
+$f(z) = ( 1- z^2)^{\frac{1}{2}} = ( 1 - z)^{\frac{1}{2}} ( 1 + z)^{\frac{1}{2}}$, which has \emph{branch points} at $z = \pm 1$. One possible parametrization is  local polar coordinates by letting $z = 1 + re^{ i \varphi_1} = -1 + r_2 e^{ i \varphi_2}$
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \draw [->] (-2, 0) -- (2, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -1) -- (0, 2);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \node at (0,0) {$\times$};
+    \node [above] at (0,0) {$0^{+}$};
+
+    \draw (-1, 0) -- (2, 1) node [right] {$z$} node [circ] {} node [pos=0.5, anchor = south east] {$r_2$};
+    \draw (1, 0) -- (2, 1) node [pos=0.7, anchor = north west] {$r_1$};
+
+    \draw (-0.6, 0) arc(0:18.435:0.4);
+    \node at (-0.8, 0.1) [above] {$\varphi_2$};
+
+    \draw (1.4, 0) arc (0:45:0.4);
+    \node at (1.4, 0.2) [right] {$\varphi_1$};
+  \end{tikzpicture}
+\end{center}
+\[
+f(z) = \pm i ( r_1 r_2)^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2) / 2} = | 1 - z^2|^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2 \pm \pi ) / 2}
+.\] 
+Choose the branch by choosing a branch cut. The natural choice is $[-1,1]$. Also, we specify the value of the function at  $z = 0^{+}$ such that $f(0^{+}) = 1$. From our equation above, $0^{+} $ corresponds to $\varphi_1 = \pi_1, \varphi_2 = 0$ i.e. $f(0^{+}) = e^{ i ( \pi + 0 \pm \pi ) / 2} = \mp 1$. So in the above equation, we take $-$ so
+\[
+    f(z) = |  1- z|^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2 - \pi)  / 2}
+.\] 
+We evaluate $f(z)$ at other points by examining how  $\varphi_1, \varphi_2$ vary along paths connecting $0^{+}$ with $z$ without crossing the branch cut.
+\end{eg}
+\underline{Integration using a branch cut} \\
+Our aim is to evaluate $I = \int_{-1}^{1} ( 1 - x^2)^{\frac{1}{2}} \text{d}x$ using contour integration. We choose the same branch as above and let $J(z) = \int_C f(z) \text{d}z$ where $C$ is the circle  $|Z| = R > 1$ traversed clockwise.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \draw (0,0)  -- node [pos = 0.5, above] {$R$} (1.27,1.27);
+    \draw [thick, ->-=0.1, ->-=0.45, ->-=0.65, ->-=0.95] (1.8,0) arc (360:0:1.8);
+  \end{tikzpicture}
+\end{center}
+\[
+    f(z) = - i z ( 1 - \frac{1}{z^2})^{\frac{1}{2}} = - i z( 1 - \frac{1}{2} z^{-2} - \frac{1}{8} z^{ - 4} + \cdots
+,\]
+i.e. the Laurent series for $|z| > 1$. Note that the $-$ at the front of our expansion comes from our choice of branch. Now, at $z = R$, we have  $\varphi_1 = \varphi_2 = 0$ i.e. 
+\[
+    f(R) = \sqrt{R^2 - 1}  e^{ i ( 0 + 0  - \pi ) / 2} = e^{- i \pi  / 2} \sqrt{R^2 - 1}  = - i \sqrt{ R^2 - 1}  
+.\] 
+So 
+\begin{align*}
+     J &= \int_C ( - i z) ( 1 - \frac{1}{2} z^{ - \frac{1}{2}} - \frac{1}{8} z^{ -4} + \cdots ) \text{d}z \\
+    &= \int_0^{- 2 \pi }  ( - i R e^{ i \theta}) ( 1 - \frac{e^{ - 2 i \theta}}{ 2R^2} + \cdots ) i R e^{ i \theta} \text{d}\theta = \pi
+.\end{align*}
+What about $I$? Let's collapse the contour onto the branch cut.
+\begin{center}
+  \begin{tikzpicture}[scale=0.8]
+    \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \draw (1.1,0) arc(360:270:0.1) -- (-1,-0.1) arc(270:90:0.1) -- (1, 0.1) arc(90:0:0.1);
+\end{tikzpicture}
+\end{center}
+
+\[
+    J = \int_{ - 1}^{1} ( 1- x^2)^{\frac{1}{2}} \text{d}x + \int_{1}^{-1} - (1 - x^2)^{\frac{1}{2}} \text{d}x   = 2 I = \pi
+.\] 
+Hence, $I = \frac{\pi}{2}$ \\
+\underline{The arcsin function defined as an integral} \\
+Introduction: Let $z = \sin w = \frac{e^{ iw} - e^{ - i w}}{2i }$, and let $v = e^{ i w}$. Then $v - \frac{1}{v} = 2 i z, v^2 - 2i z v - 1 =0$, so $v = iz + \sqrt{ 1 - z^2} $. Hence we can write $i w = \log v$ and
+\[
+    w = \arcsin z = - i \log ( i z + \sqrt{ 1 - z^2})   
+.\] 
+Hence, \[
+\frac{ \text {d} \arcsin  z}{\text{d} z}  = \frac{1}{\sqrt{ 1 - z^2} }
+,\] 
+and therefore 
+\[
+    \arcsin z = \int_0^{z} \frac{\text{d}t}{ ( 1 - t^2)^{\frac{1}{2}}}
+.\] 
+Our aim is to construct the multivariate function $\arcsin $ from a single valued function $\arcsin $ by analytic continuation. Let 
+\[
+    \arcsin z_{[0,2 \pi) } = \int_0^{z} \frac{\text{d}t}{( 1 - t^2)^{\frac{1}{2}}}
+,\]
+where
+\begin{enumerate}
+    \item The branch of $\sqrt{1  - t^2} $ is defined by a branch cut along the real axis connecting $t = -1$ and $t = 1$, with $\sqrt{ 1 - t^2} = +1 $ at the origin just above the cut (at $ t = 0^{+})$.
+    \item The path is defined as follows: 
+        \[
+        0 \le \text{arg }z  < \pi 
+        .\] 
+        \begin{center}
+            \begin{minipage}{0.4 \textwidth}
+                \begin{tikzpicture}[scale = 0.8]
+                \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [above] at (0,0.2) {$0^{+}$};
+    \node [above] at (1,2) {$z$};  
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \node [circ] at (0,0.2) {};
+    \node [circ] at (1,2) {};
+    \draw [->] (0,0.2) -- (1,2);
+\end{tikzpicture}
+\[
+ 0 \le \text{arg } z < \pi
+.\] 
+        \end{minipage}
+        \begin{minipage}{0.4 \textwidth}
+            \begin{tikzpicture}][scale = 0.8]
+                \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [above] at (0,0.2) {$0^{+}$};
+    \node [below] at (0,-0.2) {$0^{-}$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \node [circ] at (0,0.2) {};
+    \node [circ] at (0,-0.2) {};
+    \draw [->- = 0.2, ->-  = 0.5, ->- = 0.8] (0,0.2) -- (-1,0.2) arc(90:270:0.2) -- (0,-0.2) -- (1,-2);
+    \node [circ] at (1, -2) {};
+    \node [right] at (1 , -2) {$z$};
+\end{tikzpicture}
+\[
+\pi < \text{arg } z < 2 \pi 
+.\] 
+        \end{minipage}
+        \end{center}
+\end{enumerate}
+In what domain of $z$ is $\arcsin_{[0, 2\pi )} z$ analytic? Notice that 
+ \[
+     \frac{ \text {d} \arcsin_{[0, 2\pi )}  z}{\text{d} z}  = \frac{1}{\sqrt{ 1 - z^2} }
+,\]
+which has a branch as defined in (i). thus $\arcsin_{[0, 2 \pi)} z$ is not analytic on $[-1, \infty)$. It can be show, that it is discontinuous on $[-1, \infty)$
+Notice $\int_{\frac{\text{d}t}{ ( 1 - t^2)^{\frac{1}{2}}}} = - 2\pi$ integrating around our cut. 
+\[
+    \int_{-1}^{1} \frac{\text{d}t }{ ( 1- t^2)^{\frac{1}{2}}} = - 2 \int_0^{ \pi } \text{d} \theta = - 2\pi
+,\] 
+where we substituted $t = \cos \theta$. Now we obtain the analytic continuation into $\text{arg } z > 2 \pi $. Define
+\[
+    \arcsin_{( \pi , 3 \pi )} z = \int_0^{z} \frac{\text{d}t}{( 1- t^2)^{\frac{1}{2}}}
+,\]
+where
+\begin{center}
+            \begin{minipage}{0.4 \textwidth}
+                \begin{tikzpicture}[scale = 0.8]
+                \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [above] at (0,0.2) {$0^{+}$};
+    \node [below] at (0,-0.2) {$0^{-}$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \node [circ] at (0,0.2) {};
+    \node [circ] at (0,-0.2) {};
+    \draw [->- = 0.2, ->-  = 0.5, ->- = 0.8] (0,0.2) -- (-1,0.2) arc(90:270:0.2) -- (0,-0.2) -- (-1,-2);
+    \node [circ] at (-1, -2) {};
+    \node [right] at (-1 , -2) {$z$};
+\end{tikzpicture}
+\[
+ \pi  \le \text{arg } z < 2\pi
+.\] 
+        \end{minipage}     
+        \begin{minipage}{0.4 \textwidth}
+            \begin{tikzpicture}][scale = 0.8]
+                \draw [->] (-2.5, 0) -- (2.5, 0);
+    \draw [decorate, thick, decoration=zigzag] (-1, 0) -- (1, 0);
+    \draw [->] (0, -2.5) -- (0, 2.5);
+    \node [below] at (1, 0) {$1$};
+    \node [below] at (-1, 0) {$-1$};
+    \node [above, right] at (0,0.2) {$0^{+}$};
+    \node [below] at (0,-0.2) {$0^{-}$};
+    \node [circ] at (1, 0) {};
+    \node [circ] at (-1, 0) {};
+    \node [circ] at (0,0.2) {};
+    \node [circ] at (0,-0.2) {};
+    \draw [->- = 0.1, ->-  = 0.3, ->- = 0.6, ->- = 0.9] (0,0.2) -- (-1,0.2) arc(90:270:0.2) -- (1,-0.2) arc(270:450:0.2) -- (0,0.2) -- (-1,2);
+    \node [circ] at (-1, 2) {};
+    \node [left] at (-1 , 2) {$z$};
+\end{tikzpicture}
+\[
+2 \pi < \text{arg } z < 3 \pi 
+.\] 
+\end{minipage}
+\end{center}
+Now 
+\begin{itemize}
+    \item $\arcsin_{[0, 2\pi )} z = \arcsin_{( \pi , 3 \pi )}$ in  $ \pi < \text{arg }z < 2 \pi $ 
+    \item The latter is analytic in $2\pi < \text{arg } z < 3 \pi$
+\end{itemize}
+Hence we obtain the analytic continuation of $\arcsin_{ [0, 2\pi )}$ into $2 \pi < \text{arg } z < 2\pi$. This process can be repeated to obtain the multivalued function $\arcsin z $. Observe that for $ 0 \le \text{arg } z \le 2 \pi$,
+\[
+    \arcsin ( e^{ 2 \pi i } z) = \arcsin_{[0, 2\pi )} z + \int_C = \arcsin_{[ 0 , 2\pi )} z - 2\pi
+.\] 
+We can show that possible values of $\arcsin z = \arcsin_{[ 0, 2\pi )} z + 2\pi n, n \in \N$. Also, (again for $0 \le \text{arg }z \le 2 \pi $ ) 
+\[
+    \sin \left( \arcsin e^{ 2 \pi i } z\right)  = \sin \left(  \arcsin _{[0 , 2\pi )} z - 2\pi\right) 
+.\] 
+And $\sin \left(  \arcsin e^{ 2 \pi i } z \right)  = e^{ 2 \pi i} z = z$. Thus setting $w = \arcsin_{[0 , 2\pi)} z$ and using $\arcsin z = w$, we obtain $\sin w = \sin ( w - 2\pi)$. Thus $\sin w$, obtained this way is $2 \pi$ periodic.
+\section{Special Functions}
+\subsection{The Gamma function}
+Motivation: find solution to the interpolation problem, finding a smooth curve $y = f(x)$ that connects the points given by $y = x!, x \in  \N$.  We want to generalise $n!$ from integers into  $\C$. 
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[xmin = 0]
+            \addplot[smooth,blue] coordinates { 
+                    (0,1)
+                    (1, 1)
+                    (2, 2)
+                    (3, 6)
+                    (4, 24)
+                    (5 , 120)
+                };
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+Let
+\[
+    I(z) = \int_0^{ \infty} t ^{z - 1} e^{ - t}\text{d}t
+,\]
+which converges and is analytic for $\text{Re }z > 0$. Now
+\[
+    I(z + 1) = \int_0^{\infty} t^{z } e^{ - t} \text{d}t = [-t^z e^{ - t}]_0^{\infty} + \int_0^{\infty} z t^{ z - 1} e^{ - t}\text{d}t = z I(z)
+.\] 
+Hence we obtain the recurrence relation $I (z+1 ) = z I (z)$. Also, $I(1) = 1$ so $I(n + 1) = n!$ for  $n \in  \N$. Idea, define
+\[
+    \Gamma (z) = \begin{cases}
+        I(z),  &\text{Re } z > 0 \\
+        \text{by Ac in Re} z < 0, & \text{ whenever possible} 
+    \end{cases}
+.\] 
+Now, $I(z) = \frac{ I(z + 1)}{z}$ which is analytic for $\text{Re } z + 1 > 0$ i.e. $\text{Re } z > -1$ and $z \ne 0$. Similarly, 
+\[
+    \frac{ I ( z + n + 1)}{ z ( z + 1) \cdots ( z + n -1) ( z +n)}
+,\]
+is analytic for $\text{Re } z > - ( n + 1)$ and $z \ne  0 , -1, \ldots,  - n $. Hence define
+ \[
+     \Gamma ( z) = \begin{cases}
+          I(z), & \text{ for Re } z > 0 \\
+          I( z + 1) / z, & \text{ for Re } z > -1  \\
+          \vdots , & \vdots \\
+          \frac{I ( z + n + 1)}{z ( z + 1) \cdots ( z + n)}, & \text{ for Re } z > - ( n +1)
+     \end{cases}
+.\] 
+Which has simple poles at $z = 0,  - 1, \ldots$ as its only singularities.
+\[
+    \text{Res } \left( \Gamma(z), -n  \right)  = \lim_{ z \to - n} ( z + n) \Gamma(z) = \frac{(-1)^{n}}{n!}
+.\] 
+\underline{Some alternative definitions and formulae} \\
+First we look at the Euler Product Formula
+\begin{claim}
+    \[
+        \Gamma(z) = \lim_{n \to \infty} \frac{n ! n^{z}}{ z( z + 1) \cdots (z +n)} \quad \ \forall \  z \in  \C\setminus \{0,-1, \ldots\} 
+    .\]
+\end{claim}
+\begin{proof}
+    Firstly, show this for $\text{Re }z > 0 $. Note $e^{ - t} = \lim_{n \to \infty} \left( 1- \frac{t}{n}\right)^{n}$. Then,
+    \[
+        \Gamma(z) = \lim_{n \to \infty} \int_0^{n} \left( 1 - \frac{t}{n}\right)^{n} t ^{ z - 1}\text{d}t
+    .\]
+    Letting $\tau = \frac{t}{n}$,
+    \begin{align*}
+         \Gamma(z) &= \lim_{n \to \infty} n^{z} \left[ \frac{ (  1 - \tau)^{n} \tau^{z}}{z} \right]_0^{1} - \frac{n^{z}}{z} (-n)\int_0^{1} ( 1- \tau)^{n - 1} \tau^{z} \text{d} \tau \\
+        &= \lim_{n \to \infty}(-1)^{n} n^{z} (-1)^{n} n! \int_0^{1} \frac{\tau^{ z + n - 1} \text{d} \tau}{ z ( z + 1) \cdots ( z + n -1)} \\
+        &= \lim_{n \to \infty} \frac{ n! n^{z}}{ z ( z + 1) \cdots ( z  + n)}
+    .\end{align*}
+    $\Gamma(z)$ is analytic in $z \in  \C \setminus \{ 0, -1, \ldots\} $, and so is the RHS. They are equal in $\text{Re }z > 0$. Hence we obtain an analytic continuation by the identity theorem.
+\end{proof}
+Next we consider the Gauss product formula.
+\begin{claim}
+     \[
+         \Gamma(z) = \frac{1}{z} \prod_{n = 1}^{\infty} \frac{ ( 1+ \frac{1}{n})^{z}}{1 + \frac{z}{n}}
+    .\] 
+\end{claim}
+\begin{proof}
+Follows from Euler's product formula
+\begin{align*}
+    \Gamma(z) &= \frac{1}{z} \lim_{ n \to \infty} \frac{n^{z}}{( z + 1)  \cdots (  \frac{z}{n - 1)} + 1 )( \frac{z}{n} + 1)} \\
+    &= \frac{1}{z} \lim_{n \to \infty} \left( \frac{ \left( \frac{n +1}{n} \right)^{z}  \left( \frac{ n }{n -1} \right)^{z} \cdots \left( \frac{2}{1} \right)^{z} \left( \frac{n }{n + 1} \right)^{z}   }{ ( z + 1)  \cdots (  \frac{z}{n - 1)} + 1 )( \frac{z}{n} + 1)} \right) 
+.\end{align*}
+As $\left( \frac{n }{n + 1} \right)^{z} \underset{ n \to \infty}{\to} 1$, we obtain the required expression.
+\end{proof}
+Now the Weierstrass canonical product.
+\begin{claim}
+    \[
+        \frac{1}{\Gamma(z)} = z e^{ \gamma z} \prod_{k  =1}^{\infty} \left( 1 + \frac{z}{k} \right) e^{ - \frac{z}{k}}, \quad     ,\]
+        where
+    \[
+\gamma = \lim_{n \to \infty} \left(1 + \frac{1}{2} + \cdots + \frac{1}{n}  - \log n \right) \approx  0.577
+    .\] 
+    We call $\gamma$ the Euler-Mascheroni constant.
+\end{claim}
+\begin{proof}
+By Euler's product formula
+\[
+\frac{1}{\Gamma(z)} = z \lim_{n \to \infty} \frac{( 1 + z) ( 2 + z) \cdots ( n  + z)}{ n! n^{z}}
+.\] 
+Divide each term by $n, n - 1, \ldots $ and use $n^{ - z} = e^{ \log n^{ - z}}$. 
+\begin{align*}
+     \frac{1}{\Gamma(z)} &= z \lim_{n \to \infty}e^{ - z \log n} (1 + z) \cdots ( 1  + \frac{z}{n})  \\
+    &= z \lim_{n \to \infty} e^{ - z ( \log n -  ( 1 + \frac{1}{2} + \cdots + \frac{1}{n} )} e^{ - z ( 1 + \frac{1}{2} + \cdots + \frac{1}{n} )}( 1 + z) \cdots ( 1 + \frac{z}{n}) \\
+    &=z e^{ \gamma z} \prod_{k = 1}^{\infty} ( 1 + \frac{z}{k}) e^{ -\frac{z}{k}}
+.\end{align*}
+\end{proof}
+\underline{Reflection formula} \\
+\[
+    \Gamma(z) \Gamma ( 1 - z) = \pi \cosec  ( \pi z) , z \not \in \Z
+.\] 
+       \end{document}
+
