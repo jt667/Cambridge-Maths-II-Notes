@@ -39,7 +39,7 @@ trigonometric functions as integrals and elliptic integrals.
 \vspace{10pt}\\
 \noindent\textbf{Special functions}\\
 Gamma function: Euler integral definition; brief discussion of product formulae; Hankel representation;
-reflection formula; discussion of uniqueness (e.g. Wielandt’s theorem). Beta function: Euler integral
+reflection formula; discussion of uniqueness (e.g. Wielandtâ€™s theorem). Beta function: Euler integral
 definition; relation to the gamma function. Riemann zeta function: definition as a sum; integral
 representations; functional equation; *discussion of zeros and relation to p(x) and the distribution of
 prime numbers*.    
@@ -183,7 +183,7 @@ Where $C$ is a contour traversed in the anticlockwise direction.
     (Indentation Lemma) \verb |https://tartarus.org/gareth/maths/Complex_Methods/rjs/indentation.pdf|  \\
     Let $f $ have a simple pole at $z_0$, $\text{res}(f; z_0)$. Then, 
     \[
-        \lim \int_{C_{\varepsilon}} f(z) \text{d}z = i (\beta - \alpha) \text{res}(f; z_0), \quad 0 < \alpha < \beta< 2\pi 
+        \lim \int_{C_{\varepsilon}} f(z) \text{d}z = i(\beta - \alpha) \text{res}(f; z_0), \quad 0 < \alpha < \beta< 2\pi 
     .\] 
     Where on $C_{\varepsilon}$ $z  = z_0 + \varepsilon e^{ i \theta}, \alpha \le \theta \le \beta$
 \end{lemma}
@@ -194,9 +194,9 @@ Consider Laurent expansions of $f$ about $z_0$
 ,\]
 where $g(z)$ is analytic in the region $| z - z_0| < r$, where $r > 0 $. By continuity of $g$ at $z_0$ we can choose $r$ small enough so $g $ is bounded by some $M$. On $0 < \varepsilon < r$, we have 
 \begin{align*}
-    \int_{ C_{\varepsilon}} f(z)\text{d}z  &= \text{res}(f, z_0) \int_{C_{\varepsilon}} \frac{d\text{dz}}{ z - z_0} + \int_{C_{\varepsilon}} g(z) \text{d}z \\
-    &= i \text{res} (f, z_0) + \int_{C_{\varepsilon}} g(z) \text d z 
-    &= i ( \beta - \alpha) \text{res} (f, z_0) \\
+    \int_{ C_{\varepsilon}} f(z)\text{d}z  &= \text{res}(f, z_0) \int_{C_{\varepsilon}} \frac{\text{dz}}{ z - z_0} + \int_{C_{\varepsilon}} g(z) \text{d}z \\
+    &= i\text{res} (f, z_0) + \int_{C_{\varepsilon}} g(z) \text d z 
+    &= i( \beta - \alpha) \text{res} (f, z_0) \\
 .\end{align*}
 
 Since 
@@ -217,7 +217,7 @@ where $C$ is some path in $\C$ (not necessarily closed contour). For which value
 \end{enumerate}
 Note: there will be no rigorous treatment of (ii).
 \begin{eg}
-    $F(z) = \int_{- \infty}^{\infty} e^{ - z t^2} \text{d}t ( = \left( \frac{\pi}{z} \right)^{\frac{1}{2}}$.
+    $F(z) = \int_{- \infty}^{\infty} e^{ - z t^2} \text{d}t \text{(} = \left( \frac{\pi}{z} \right)^{\frac{1}{2}}$\text{)}.
     \begin{itemize}
         \item  Existence: Converges for $\text{Re} z > 0$ and diverges for $\text{Re} z < 0$. If $\text{Re} z = 0$ but $z\ne 0$ (i.e. $z$ is imaginary) then the integrand $e^{ - i yt^2} $ oscillates increasingly rapidly. $F(z)$ is not absolutely convergent but conditionally convergent.
             \[
@@ -241,7 +241,7 @@ So need $\text{Re } z < 1$. Clearly for $\text{Re } z > 1, \text{Re } z < 0$, $F
         \item Analyticity: (i), (iii) are clearly satisfied again leaving out (ii). So $F(z)$ is analytic for $0 < \text{Re }z < 1$.
         \item Evaluating the integral: Consider $ $
             \[
-            J = \int_C \frac{t ^{z - 1}}{ t + 1}\text{d}t  = \int_{C_+} + \int_{C_R} + \int_{C_-} \int C_{\epsilon}           
+            J = \int_C \frac{t ^{z - 1}}{ t + 1}\text{d}t  = \int_{C_+} + \int_{C_R} + \int_{C_-} + \int_{C_{\epsilon}}           
         ,\]
         where $R \to \infty, \epsilon \to 0$ and a simple pole at $t = - 1 - e^{ i \pi}$
             \begin{center}
@@ -310,14 +310,14 @@ Let $D_1, D_2$ be open sets with $D_1 \cap D_2 \ne \emptyset$. Let $f_1$ and $f_
     .\] 
     Then, by the Identity Theorem, $g_1= g_2$ on $D_1 \cup D_2$. Hence $f_2 = \tilde{f}_2$ so the extension is unique.
 \end{proof}
-With three domains, in the case that we only have overlaps between consecutive domains we cannot use the Identity Theorem on $D_1$ and $D_3$. However, $AC$ of $f_1$ to $D_3$ is unique if AC is possible for all domains connecting $D_1$ and $D_3$ (Monodromy Theorem). The proof is left as an exercise.
+With three domains, in the case that we only have overlaps between consecutive domains we cannot use the Identity Theorem on $D_1$ and $D_3$. However, $AC$ of $f_1$ to $D_3$ is unique if AC is possible for all domains connecting $D_1$ and $D_3$ (Monodromy Theorem). The proof is left as an exercise.\\
 \underline{Methods of AC}
 \begin{enumerate}
     \item By Taylor expansion: Choose $z_0$ on the boundary of $D$ and extend  $f_1$ to a disk $| z - z_0| < r$, $r$- radius of convergence. 
         \begin{eg}
             How to obtain $f(z) = \frac{1}{1 - z}$ by AC. We first note that
             \[
-                \frac{1}{1 -z} = \frac{1}{1 - z_0} \cdot \frac{1}{ 1 - \frac{z - z_0}{ 1 - z_0}} = \frac{1}{1 - z} \sum_{n = 0}^{\infty} \left( \frac{z - z_0}{ 1 - z_0} \right)^{n} 
+                \frac{1}{1 -z} = \frac{1}{1 - z_0} \cdot \frac{1}{ 1 - \frac{z - z_0}{ 1 - z_0}} = \frac{1}{1 - z_0} \sum_{n = 0}^{\infty} \left( \frac{z - z_0}{ 1 - z_0} \right)^{n} 
             ,\] 
             which is convergent if $|z - z_0| < |1 - z_0| = r$. Now, let $f_1  = \sum_{n =0}^{\infty}z^{n}$. It is analytic, for $|z| < 1 = D_1$. Let $f_2 = \sum_{n = 0}^{\infty} \frac{( z - \frac{i}{2})^{n}}{ (z - \frac{i}{2})^{n + 1}}$ which is analytic within the disk $|z - \frac{i}{2}| < \frac{\sqrt{5} }{2} = D_2$. So $f_{1} = f_2$ on $D_1 \cap D_2$. Hence, by the Identity Theorem $f_2$ is the AC of  $f_1$ into $D_2$. This can be continued as a chain of discs to cover the entire $\C \setminus \{ 1\} $ to obtain $\frac{1}{1 - z}$, which has a simple pole at $z = 1$. A Meromorphic continuation - AC excluding singularities. 
         \end{eg}
@@ -327,9 +327,9 @@ With three domains, in the case that we only have overlaps between consecutive d
         \end{eg}
     \item By contour deformation 
         \begin{eg}
-            Let $F(z) = \int_{- \infty}^\infty \frac{e^{ i z}}{ t  - z} \text{d}t$ for $\text{Im } z > 0$. We want to continue $F(z)$ to the lower half plane. Obviously, $F(z)$ is not analytic for $\text{Im } z = 0 $. Why can't we just redefine $F$ for $\text{Im } z \ne 0$? Continue $F$ into a neighbourhood of $z_1$ with $\text{Im } z_1 < 0$. Define
+            Let $F(z) = \int_{- \infty}^\infty \frac{e^{ i t}}{ t  - z} \text{d}t$ for $\text{Im } z > 0$. We want to continue $F(z)$ to the lower half plane. Obviously, $F(z)$ is not analytic for $\text{Im } z = 0 $. Why can't we just redefine $F$ for $\text{Im } z \ne 0$? Continue $F$ into a neighbourhood of $z_1$ with $\text{Im } z_1 < 0$. Define
             \[
-                F(z) = \int_\gamma \frac{e^{ i t}}{ t - z}\text{d}t
+                F_{1}(z) = \int_\gamma \frac{e^{ i t}}{ t - z}\text{d}t
             .\] 
             With $\gamma$ as shown. $F_1$ is defined and analytic $\ \forall \  z $  above $z_1$. If $\text{Im } z > 0$, then $F_1(z) = F(z)$. Indeed, the integrals agree by contour deformation as we can deform $\gamma$ to the real axis without crossing any singularities. Hence $F_1$ is the AC of  $F$ into $\text{Im } z < 0$ (above $\gamma$). Now, let 
             \[
@@ -345,7 +345,7 @@ With three domains, in the case that we only have overlaps between consecutive d
 \subsection{Cauchy Principal Value}
 Motivation: can we say that
 \[
-\int_{-1}^{2} \frac{\text{d}x }{2} = \log 2 - \log |-1|  = \log 2 \text{?}
+\int_{-1}^{2} \frac{\text{d}x }{x} = \log 2 - \log |-1|  = \log 2 \text{?}
 .\] 
 \begin{defi}[Cauchy principle value]
     If $f(x)$ is "badly" behaved at  $x = c$ and $a < c < b$, we define the \emph{Cauchy principal value} (CPV) integral by
@@ -376,7 +376,7 @@ It should be clear that
     \int_{C_1} \to I  \quad  \int_{C_{\varepsilon}} \to - i \pi f(0)  \quad  \int_{C_R} \to 0
 .\] 
 With the residue for $C_{\varepsilon}$ coming from the indentation lemma since $z = 0$ is a simple pole unless $f(0) = 0$. So,  $I = i \pi f(0)$. Alternatively,
-$\oint_{C_1} = I i\pi f(0) = 2 \pi i f(0)$, so $I = i \pi f(0)$.
+$\oint_{C} = I + i\pi f(0) = 2 \pi i f(0)$, so $I = i \pi f(0)$ (illustrated below, uses residue of the pole at 0).
 \begin{center}
   \begin{tikzpicture}
     \draw [->] (-3, 0) -- (3, 0);
@@ -398,7 +398,7 @@ Here we merely use CPV as a tool. Let $I = \int_{-\infty}^{\infty} \frac{1 - \co
 .\] 
 Of which the exponential terms do not converge at $x =0$. So we deform the contour to exclude $0$. For the second integral, we close $C$ in the upper half plane giving zero (since there are no singularities within the closed contour). For the third integral, we close $C$ in the lower half plane giving $- 2 \pi  i ( - i / 2)$ (the minus because we are circling the pole or order two in the clockwise sense). For the first integral, we can close either in the upper half or the lower half plane, giving $0$ (since in the first case the contour encloses no singularities and in the second case the residue of the enclosed singularity is 0). Therefore, I = $\pi$. We can instead use CPV, by continuity of the integral 
 \[
-I = \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x^2}\text{d}x = \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x}\text{d}x = \text{Re } \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - e^{ix}}{ x^2}\text{d}x
+I = \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x^2}\text{d}x = \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - \cos x}{ x^2}\text{d}x = \text{Re } \mathcal{P} \int_{-\infty}^{\infty} \frac{1 - e^{ix}}{ x^2}\text{d}x
 .\] 
 Consider $J = \int_C \frac{1 - e^{ i z}}{z^2} \text{d}z$. 
 \begin{center}
@@ -442,7 +442,7 @@ For a Harmonic function, we must have
 \frac{\partial^2 u}{\partial x^2}  + \frac{\partial ^2u}{\partial y^2} = 4 \frac{\partial ^2 u }{\partial \overline{z} \partial z}  = 0 
 .\] 
 \begin{eg}
-$f(z) = ( 1- z^2)^{\frac{1}{2}} = ( 1 - z)^{\frac{1}{2}} ( 1 + z)^{\frac{1}{2}}$, which has \emph{branch points} at $z = \pm 1$. One possible parametrization is  local polar coordinates by letting $z = 1 + re^{ i \varphi_1} = -1 + r_2 e^{ i \varphi_2}$
+$f(z) = ( 1- z^2)^{\frac{1}{2}} = ( 1 - z)^{\frac{1}{2}} ( 1 + z)^{\frac{1}{2}}$, which has \emph{branch points} at $z = \pm 1$. One possible parametrization is  local polar coordinates by letting $z = 1 + r_1 e^{ i \varphi_1} = -1 + r_2 e^{ i \varphi_2}$
 \begin{center}
   \begin{tikzpicture}[scale=1.5]
     \draw [->] (-2, 0) -- (2, 0);
@@ -468,7 +468,7 @@ $f(z) = ( 1- z^2)^{\frac{1}{2}} = ( 1 - z)^{\frac{1}{2}} ( 1 + z)^{\frac{1}{2}}$
 \[
 f(z) = \pm i ( r_1 r_2)^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2) / 2} = | 1 - z^2|^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2 \pm \pi ) / 2}
 .\] 
-Choose the branch by choosing a branch cut. The natural choice is $[-1,1]$. Also, we specify the value of the function at  $z = 0^{+}$ such that $f(0^{+}) = 1$. From our equation above, $0^{+} $ corresponds to $\varphi_1 = \pi_1, \varphi_2 = 0$ i.e. $f(0^{+}) = e^{ i ( \pi + 0 \pm \pi ) / 2} = \mp 1$. So in the above equation, we take $-$ so
+Choose the branch by choosing a branch cut. The natural choice is $[-1,1]$. Also, we specify the value of the function at  $z = 0^{+}$ such that $f(0^{+}) = 1$. From our equation above, $0^{+} $ corresponds to $\varphi_1 = \pi, \varphi_2 = 0$ i.e. $f(0^{+}) = e^{ i ( \pi + 0 \pm \pi ) / 2} = \mp 1$. So in the above equation, we take $-$ so
 \[
     f(z) = |  1- z|^{\frac{1}{2}} e^{ i ( \varphi_1 + \varphi_2 - \pi)  / 2}
 .\] 
@@ -540,9 +540,6 @@ where
 \begin{enumerate}
     \item The branch of $\sqrt{1  - t^2} $ is defined by a branch cut along the real axis connecting $t = -1$ and $t = 1$, with $\sqrt{ 1 - t^2} = +1 $ at the origin just above the cut (at $ t = 0^{+})$.
     \item The path is defined as follows: 
-        \[
-        0 \le \text{arg }z  < \pi 
-        .\] 
         \begin{center}
             \begin{minipage}{0.4 \textwidth}
                 \begin{tikzpicture}[scale = 0.8]
@@ -591,7 +588,7 @@ In what domain of $z$ is $\arcsin_{[0, 2\pi )} z$ analytic? Notice that
      \frac{ \text {d} \arcsin_{[0, 2\pi )}  z}{\text{d} z}  = \frac{1}{\sqrt{ 1 - z^2} }
 ,\]
 which has a branch as defined in (i). thus $\arcsin_{[0, 2 \pi)} z$ is not analytic on $[-1, \infty)$. It can be show, that it is discontinuous on $[-1, \infty)$
-Notice $\int_{\frac{\text{d}t}{ ( 1 - t^2)^{\frac{1}{2}}}} = - 2\pi$ integrating around our cut. 
+Notice $\int \frac{\text{d}t}{ ( 1 - t^2)^{\frac{1}{2}}} = - 2\pi$ integrating around our cut. 
 \[
     \int_{-1}^{1} \frac{\text{d}t }{ ( 1- t^2)^{\frac{1}{2}}} = - 2 \int_0^{ \pi } \text{d} \theta = - 2\pi
 ,\] 
